@@ -75,46 +75,46 @@ fun HomeScreen(navController: NavHostController) {
         }
 
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.apen))
-                },
-                navigationIcon = @Composable {
-                    if (!isDrawerOpen) {
-                        IconButton(onClick = { isDrawerOpen = true }) {
-                            Icon(
-                                Icons.Default.Menu,
-                                contentDescription = "Menu",
-                                tint = Color.White
-                                )
-                        }
-                    }
-                },
+       // topBar = {
+          //  CenterAlignedTopAppBar(
+             //   title = {
+              //      Text(text = stringResource(id = R.string.premier))
+             //   },
+               // navigationIcon = @Composable {
+                  //  if (!isDrawerOpen) {
+                       // IconButton(onClick = { isDrawerOpen = true }) {
+                           // Icon(
+                              //  Icons.Default.Menu,
+                              //  contentDescription = "Menu",
+                               // tint = Color.Black
+                              //  )
+                       // }
+                  //  }
+               // },
 
-                actions = {
-                    IconButton(onClick = {
-                        navController.navigate(ROUTE_LOGIN) {
-                            popUpTo(ROUTE_HOME) { inclusive = true }
-                        }
+               // actions = {
+                   // IconButton(onClick = {
+                      //  navController.navigate(ROUTE_LOGIN) {
+                         //   popUpTo(ROUTE_HOME) { inclusive = true }
+                      //  }
 
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.AccountCircle,
-                            contentDescription = null,
-                            tint = Color.White
-                        )
-                    }
-                },
+                   // }) {
+                       // Icon(
+                           // imageVector = Icons.Filled.AccountCircle,
+                           // contentDescription = null,
+                          //  tint = Color.Black
+                       // )
+                    //}
+                //},
 
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xff0FB06A),
-                    titleContentColor = Color.White,
+               // colors = TopAppBarDefaults.topAppBarColors(
+                  //  containerColor = Color(0xff0FB06A),
+                //    titleContentColor = Color.White,
 
-                )
+             //   )
 
-            )
-        },
+         //   )
+        //},
 
         content = @Composable {
             Box(
@@ -131,7 +131,7 @@ fun HomeScreen(navController: NavHostController) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color(0xff9AEDC9)),
+                        .background(Color(0xffFFFFFF)),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -216,15 +216,6 @@ fun HomeScreen(navController: NavHostController) {
                     )
 
 
-                    
-                    Spacer(modifier = Modifier.height(15.dp))
-                    
-                    Text(
-                        text = "You're welcome",
-                        fontSize = 30.sp,
-                        color = Color.White
-                    )
-
 
 
                 }
@@ -294,31 +285,31 @@ fun BottomBar(navController: NavHostController) {
     val selectedIndex = remember { mutableStateOf(0) }
     BottomNavigation(
         elevation = 10.dp,
-        backgroundColor = Color(0xff0FB06A)
+        backgroundColor = Color(0xffFFFFFF)
 
 
     ) {
 
         BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Home,"", tint = Color.White)
+            Icon(imageVector = Icons.Default.Home,"", tint = Color.Black)
         },
-            label = { Text(text = "Home",color =  Color.White) }, selected = (selectedIndex.value == 0), onClick = {
+            label = { Text(text = "Home",color =  Color.Black) }, selected = (selectedIndex.value == 0), onClick = {
 
             })
 
         BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Favorite,"",tint = Color.White)
+            Icon(imageVector = Icons.Default.Favorite,"",tint = Color.Black)
         },
-            label = { Text(text = "Favorite",color =  Color.White) }, selected = (selectedIndex.value == 1), onClick = {
+            label = { Text(text = "Favorite",color =  Color.Black) }, selected = (selectedIndex.value == 1), onClick = {
 
             })
 
         BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Person, "",tint = Color.White)
+            Icon(imageVector = Icons.Default.Person, "",tint = Color.Black)
         },
             label = { Text(
-                text = "Students",
-                color =  Color.White) },
+                text = "Profile",
+                color =  Color.Black) },
             selected = (selectedIndex.value == 2),
             onClick = {
 

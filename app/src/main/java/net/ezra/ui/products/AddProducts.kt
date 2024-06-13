@@ -76,7 +76,7 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xff0FB06A),
+                    containerColor = Color(0xffADD8E6),
                     titleContentColor = Color.White,
                 )
             )

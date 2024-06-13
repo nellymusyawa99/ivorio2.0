@@ -57,7 +57,7 @@ fun SplashScreen(navController: NavHostController) {
             modifier = Modifier.scale(scale.value)
         )
 
-        Text("Apen Softwares")
+        Text("Premier Softwares")
 
 
 
