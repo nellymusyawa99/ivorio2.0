@@ -87,7 +87,7 @@ fun UpdateProductScreen(navController: NavController, productId: String, product
         Spacer(modifier = Modifier.height(16.dp))
         updatedProductImageUri?.let { uri ->
             Image(
-                painter = painterResource(id = R.drawable.logo), // Placeholder image
+                painter = painterResource(id = R.drawable.picture2), // Placeholder image
                 contentDescription = null,
                 modifier = Modifier.size(120.dp)
             )

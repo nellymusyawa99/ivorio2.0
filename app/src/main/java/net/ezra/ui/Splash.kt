@@ -15,12 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.delay
 import net.ezra.R
 import net.ezra.navigation.ROUTE_HOME
-
+import net.ezra.navigation.ROUTE_LOGIN
 
 
 @Composable
@@ -42,21 +43,24 @@ fun SplashScreen(navController: NavHostController) {
                 }))
         // Customize the delay time
         delay(3000L)
-        navController.navigate(ROUTE_HOME)
+        navController.navigate(ROUTE_LOGIN)
     }
 
     // Image
 
-    Column (
+    Column(
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-
-        Image(painter = painterResource(id = R.drawable.logo),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize() // Ensure the Column occupies the entire available space
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.picture),
             contentDescription = "Logo",
-            modifier = Modifier.scale(scale.value)
+            modifier = Modifier
+                .size(200.dp) // Specify the size here
+                .scale(scale.value)
+                .padding(16.dp) // Add padding for better visibility
         )
-
         Text("Premier Softwares")
 
 

@@ -6,6 +6,7 @@ package net.ezra.ui.home
 
 
 import android.annotation.SuppressLint
+import android.content.ClipData.Item
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
@@ -14,13 +15,22 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigation
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
@@ -29,6 +39,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -41,14 +52,17 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.size.Size
 import net.ezra.R
 import net.ezra.navigation.ROUTE_ABOUT
 import net.ezra.navigation.ROUTE_ADD_PRODUCT
@@ -63,7 +77,7 @@ import net.ezra.navigation.ROUTE_VIEW_STUDENTS
 
 data class Screen(val title: String, val icon: Int)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "ResourceAsColor")
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
@@ -76,45 +90,45 @@ fun HomeScreen(navController: NavHostController) {
 
     Scaffold(
        // topBar = {
-          //  CenterAlignedTopAppBar(
-             //   title = {
-              //      Text(text = stringResource(id = R.string.premier))
-             //   },
-               // navigationIcon = @Composable {
-                  //  if (!isDrawerOpen) {
-                       // IconButton(onClick = { isDrawerOpen = true }) {
-                           // Icon(
-                              //  Icons.Default.Menu,
-                              //  contentDescription = "Menu",
-                               // tint = Color.Black
-                              //  )
-                       // }
-                  //  }
-               // },
+       //     CenterAlignedTopAppBar(
+       //         title = {
+       //             Text(text = "Ivorio Lab Supplies")
+      //          },
+//                navigationIcon = @Composable {
+//                    if (!isDrawerOpen) {
+//                        IconButton(onClick = { isDrawerOpen = true }) {
+//                            Icon(
+//                                Icons.Default.Menu,
+//                                contentDescription = "Menu",
+//                                tint = Color.Black
+//                                )
+//                        }
+//                    }
+//                },
 
-               // actions = {
-                   // IconButton(onClick = {
-                      //  navController.navigate(ROUTE_LOGIN) {
-                         //   popUpTo(ROUTE_HOME) { inclusive = true }
-                      //  }
+//                actions = {
+//                    IconButton(onClick = {
+//                        navController.navigate(ROUTE_LOGIN) {
+//                            popUpTo(ROUTE_HOME) { inclusive = true }
+//                        }
+//
+//                    }) {
+//                        Icon(
+//                            imageVector = Icons.Filled.AccountCircle,
+//                            contentDescription = null,
+//                            tint = Color.Black
+//                        )
+//                    }
+//                },
 
-                   // }) {
-                       // Icon(
-                           // imageVector = Icons.Filled.AccountCircle,
-                           // contentDescription = null,
-                          //  tint = Color.Black
-                       // )
-                    //}
-                //},
+          //      colors = TopAppBarDefaults.topAppBarColors(
+       //             containerColor = Color(0xffA865B5),
+      //              titleContentColor = Color.White,
 
-               // colors = TopAppBarDefaults.topAppBarColors(
-                  //  containerColor = Color(0xff0FB06A),
-                //    titleContentColor = Color.White,
+  //              )
 
-             //   )
-
-         //   )
-        //},
+ //           )
+ //       },
 
         content = @Composable {
             Box(
@@ -128,96 +142,541 @@ fun HomeScreen(navController: NavHostController) {
             ) {
 
 
-                Column(
+                LazyColumn (
                     modifier = Modifier
-                        .fillMaxSize()
                         .background(Color(0xffFFFFFF)),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    item {
+                        Spacer(modifier = Modifier.height(70.dp))
+                        LazyRow {
+                            item {
+                                Row {
+                                    LazyRow {
+                                        item {
+                                            Text(text = "Test Strips")
 
-                    Text(
-                        text = stringResource(id = R.string.call),
-                        fontSize = 20.sp,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .clickable {
+                                            Spacer(modifier = Modifier.width(20.dp))
 
-                                val intent = Intent(Intent.ACTION_DIAL)
-                                intent.data = Uri.parse("tel:+254796759850")
+                                            Text(text = "Test Strips")
 
-                                callLauncher.launch(intent)
+                                            
+
+
+
+                                        }
+                                    }
+
+                                }
+                                Card(
+                                    shape = RoundedCornerShape(20.dp)
+                                ) {
+                                    Box {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.card1),
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
+
+                                Spacer(modifier = Modifier.width(10.dp))
+
+                                Card(
+                                    shape = RoundedCornerShape(20.dp)
+                                ) {
+                                    Box {
+                                        Image(
+                                            painter = painterResource(id = R.drawable.card2),
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
+
                             }
-                    )
+                        }
 
-                    Text(
-                        text = stringResource(id = R.string.developer),
-                        fontSize = 20.sp,
-                    )
+                        Spacer(modifier = Modifier.height(10.dp))
 
-                    Spacer(modifier = Modifier.height(15.dp))
+                        Row {
+                            Text(
+                                text = "Categories",
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xffA865B5),
+                                fontSize = 20.sp
+                            )
+                        }
 
-                    Text(
-                        modifier = Modifier
+                        Spacer(modifier = Modifier.height(15.dp))
 
-                            .clickable {
-                                navController.navigate(ROUTE_LOGIN) {
-                                    popUpTo(ROUTE_HOME) { inclusive = true }
+                        Row {
+                            Card(
+                                modifier = Modifier
+                                    .size(60.dp),
+                                RoundedCornerShape(10.dp)
+                            ) {
+                                Box {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.first2),
+                                        contentDescription = "filter",
+                                        modifier = Modifier
+                                            .clickable { }
+                                            .height(30.dp)
+                                            .width(70.dp)
+                                            .clip(CircleShape),
+
+                                        )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.BottomEnd
+                                    ) {
+                                        Text(text = "First Aid Kit")
+                                    }
                                 }
-                            },
-                        text = "Login Here",
-                        textAlign = TextAlign.Center,
-                        fontSize = 20.sp,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
 
+                            }
 
+                            Spacer(modifier = Modifier.padding(20.dp))
 
-                    Text(
-                        modifier = Modifier
+                            Card(
+                                modifier = Modifier
+                                    .size(60.dp),
+                                RoundedCornerShape(10.dp)
+                            ) {
+                                Box {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.first2),
+                                        contentDescription = "filter",
+                                        modifier = Modifier
+                                            .clickable { }
+                                            .height(30.dp)
+                                            .width(70.dp)
+                                            .clip(CircleShape),
 
-                            .clickable {
-                                navController.navigate(ROUTE_ADD_PRODUCT) {
-                                    popUpTo(ROUTE_HOME) { inclusive = true }
+                                        )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.BottomEnd
+                                    ) {
+                                        Text(text = "First Aid Kit")
+                                    }
                                 }
-                            },
-                        text = "Add Products",
-                        textAlign = TextAlign.Center,
-                        fontSize = 20.sp,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
+                            }
 
-                    Text(
-                        modifier = Modifier
+                            Spacer(modifier = Modifier.padding(20.dp))
 
-                            .clickable {
-                                navController.navigate(ROUTE_ADD_STUDENTS) {
-                                    popUpTo(ROUTE_HOME) { inclusive = true }
+                            Card(
+                                modifier = Modifier
+                                    .size(60.dp),
+                                RoundedCornerShape(10.dp)
+                            ) {
+                                Box {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.strips),
+                                        contentDescription = "filter",
+                                        modifier = Modifier
+                                            .clickable { }
+                                            .height(30.dp)
+                                            .width(70.dp)
+                                            .clip(CircleShape),
+
+                                        )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.BottomEnd
+                                    ) {
+                                        Text(text = "Test Strips")
+                                    }
+
                                 }
-                            },
-                        text = "Add Students",
-                        textAlign = TextAlign.Center,
-                        fontSize = 20.sp,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
+                            }
 
-                    Text(
-                        modifier = Modifier
+                            Spacer(modifier = Modifier.padding(20.dp))
 
-                            .clickable {
-                                navController.navigate(ROUTE_VIEW_PROD) {
-                                    popUpTo(ROUTE_HOME) { inclusive = true }
+                            Card(
+                                modifier = Modifier
+                                    .size(60.dp),
+                                RoundedCornerShape(10.dp)
+                            ) {
+                                Box {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.syringe3),
+                                        contentDescription = "filter",
+                                        modifier = Modifier
+                                            .clickable { }
+                                            .height(30.dp)
+                                            .width(70.dp)
+                                            .clip(CircleShape),
+
+                                        )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.BottomEnd
+                                    ) {
+                                        Text(text = "Syringes G2")
+                                    }
+
                                 }
-                            },
-                        text = "view Products",
-                        textAlign = TextAlign.Center,
-                        fontSize = 20.sp,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
+                            }
+
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Row {
+                            Card(
+                                modifier = Modifier
+                                    .size(60.dp),
+                                RoundedCornerShape(10.dp)
+                            ) {
+                                Box {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.syringe3),
+                                        contentDescription = "filter",
+                                        modifier = Modifier
+                                            .clickable { }
+                                            .height(30.dp)
+                                            .width(70.dp)
+                                            .clip(CircleShape),
+
+                                        )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.BottomEnd
+                                    ) {
+                                        Text(text = "Syringes G1")
+                                    }
+
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.padding(20.dp))
+
+                            Card(
+                                modifier = Modifier
+                                    .size(60.dp),
+                                RoundedCornerShape(10.dp)
+                            ) {
+                                Box {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.syringe3),
+                                        contentDescription = "filter",
+                                        modifier = Modifier
+                                            .clickable { }
+                                            .height(30.dp)
+                                            .width(70.dp)
+                                            .clip(CircleShape),
+
+                                        )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.BottomEnd
+                                    ) {
+                                        Text(text = "Syringes G1")
+                                    }
+
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.padding(20.dp))
+
+                            Card(
+                                modifier = Modifier
+                                    .size(60.dp),
+                                RoundedCornerShape(10.dp)
+                            ) {
+                                Box {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.syringe3),
+                                        contentDescription = "filter",
+                                        modifier = Modifier
+                                            .clickable { }
+                                            .height(30.dp)
+                                            .width(70.dp)
+                                            .clip(CircleShape),
+
+                                        )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.BottomEnd
+                                    ) {
+                                        Text(text = "Syringes G1")
+                                    }
+
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.padding(20.dp))
+
+                            Card(
+                                modifier = Modifier
+                                    .size(60.dp),
+                                RoundedCornerShape(10.dp)
+                            ) {
+                                Box {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.syringe3),
+                                        contentDescription = "filter",
+                                        modifier = Modifier
+                                            .clickable { }
+                                            .height(30.dp)
+                                            .width(70.dp)
+                                            .clip(CircleShape),
+
+                                        )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.BottomEnd
+                                    ) {
+                                        Text(text = "Syringes G1")
+                                    }
+
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.padding(20.dp))
+
+                            Card(
+                                modifier = Modifier
+                                    .size(60.dp),
+                                RoundedCornerShape(10.dp)
+                            ) {
+                                Box {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.syringe3),
+                                        contentDescription = "filter",
+                                        modifier = Modifier
+                                            .clickable { }
+                                            .height(30.dp)
+                                            .width(70.dp)
+                                            .clip(CircleShape),
+
+                                        )
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.BottomEnd
+                                    ) {
+                                        Text(text = "Syringes G1")
+                                    }
+
+                                }
+                            }
+                            
+                            Spacer(modifier = Modifier.padding(20.dp))
+                            
+                            Row {
+                                
+                                Text(text = "Why Us?You must Trust us",
+                                    modifier = Modifier,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 40.sp)
+                            }
+                            
+                            Spacer(modifier = Modifier.height(20.dp))
+                            
+                            Row {
+                                Card {
+                                    Row {
+                                        Image(painter = painterResource(id = R.drawable.malaria),
+                                            contentDescription = null)
+                                    }
+                                    Spacer(modifier = Modifier.height(5.dp))
+                                    Row {
+                                        Text(text = "Fast Helper")
+                                    }
+                                    Spacer(modifier = Modifier.height(5.dp))
+                                    Row {
+                                       Text(text = "we offer fast deliveries")
+                                    }
+                                    
+                                }
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Card {
+                                    
+                                }
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Card {
+                                    
+                                }
+                                
+                            }
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        }
+
+
+
+
+
+
+                        val currentPage = remember { mutableStateOf(0) }
+
+                       // LazyRow {
+                        //    item {
+                         //       Box {
+                         //           Card(
+                          //              modifier = Modifier.padding(5.dp)
+                          //          ) {
+                         //               Image(
+                         //                   painter = painterResource(id = R.drawable.equipment4),
+                         //                   contentDescription = "null",
+                        //                    modifier = Modifier
+                        //                        .width(300.dp)
+                      //                          .height(300.dp)
+                    //                    )
+                   //                 }
+                  //              }
+                  //          }
+                 //           item {
+                 //               Box{
+                 //               Card(
+                 //                   modifier = Modifier.padding(5.dp)
+                 //               ) {
+                 //                   Image(
+                  //                      painter = painterResource(id = R.drawable.equipment2),
+                  //                      contentDescription = "null",
+                  //                      modifier = Modifier
+                  //                          .width(300.dp)
+                 //                           .height(300.dp)
+                 //                   )
+             //                   }
+               //             }
+                //            }
+                //            item {
+               //                 Box {
+              //                  Card(
+             //                       modifier = Modifier.padding(5.dp)
+              //                  ) {
+             //                       Image(
+            //                            painter = painterResource(id = R.drawable.equipment3),
+          //                              contentDescription = "null",
+         //                               modifier = Modifier
+        //                                    .width(300.dp)
+        //                                    .height(300.dp)
+       //                             )
+       //                         }
+       //                     }
+      //                      }
+     //                   }
+
+
+
+
+                     //   Text(
+                   //     text = stringResource(id = R.string.call),
+                   //     fontSize = 20.sp,
+                  //      modifier = Modifier
+                   //         .padding(16.dp)
+                  //          .clickable {
+
+                    //            val intent = Intent(Intent.ACTION_DIAL)
+                   //             intent.data = Uri.parse("tel:+254796759850")
+
+                  //              callLauncher.launch(intent)
+                 //           }
+                //    )
+
+                   // Text(
+                    //    text = stringResource(id = R.string.developer),
+                    //    fontSize = 20.sp,
+                   // )
+
+                   // Spacer(modifier = Modifier.height(15.dp))
+
+                //    Text(
+            //            modifier = Modifier
+              //              .clickable {
+            //                    navController.navigate(ROUTE_LOGIN) {
+            //                        popUpTo(ROUTE_HOME) { inclusive = true }
+         //                       }
+         //                   },
+        //                text = "Login Here",
+       //                 textAlign = TextAlign.Center,
+     //                   fontSize = 20.sp,
+     //                   color = MaterialTheme.colorScheme.onSurface
+    //                )
+
+
+
+      //              Text(
+      //                  modifier = Modifier
+
+         //                   .clickable {
+   //                             navController.navigate(ROUTE_ADD_PRODUCT) {
+  //                                  popUpTo(ROUTE_HOME) { inclusive = true }
+  //                              }
+  //                          },
+   //                     text = "Add Products",
+    //                    textAlign = TextAlign.Center,
+   //                     fontSize = 20.sp,
+   //                     color = MaterialTheme.colorScheme.onSurface
+   //                 )
+
+    //                Text(
+    //                    modifier = Modifier
+
+        //                    .clickable {
+       //                         navController.navigate(ROUTE_ADD_STUDENTS) {
+    //                                popUpTo(ROUTE_HOME) { inclusive = true }
+    //                            }
+    //                        },
+     //                   text = "Add Students",
+     //                   textAlign = TextAlign.Center,
+    //                    fontSize = 20.sp,
+    //                    color = MaterialTheme.colorScheme.onSurface
+    //                )
+
+  //                  Text(
+  //                      modifier = Modifier
+
+//                            .clickable {
+  //                              navController.navigate(ROUTE_VIEW_PROD) {
+  //                                  popUpTo(ROUTE_HOME) { inclusive = true }
+   //                             }
+   //                         },
+   //                     text = "view Products",
+   //                     textAlign = TextAlign.Center,
+    //                    fontSize = 20.sp,
+     //                   color = MaterialTheme.colorScheme.onSurface
+      //              )
+
+
+                }
                 }
 
             }
@@ -285,35 +744,73 @@ fun BottomBar(navController: NavHostController) {
     val selectedIndex = remember { mutableStateOf(0) }
     BottomNavigation(
         elevation = 10.dp,
-        backgroundColor = Color(0xffFFFFFF)
+        backgroundColor = Color(0xffA865B5)
 
 
     ) {
 
         BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Home,"", tint = Color.Black)
+            Image(painter = painterResource(id = R.drawable.home2),
+                contentDescription = "null",
+                modifier = Modifier
+                    .width(30.dp)
+                    .height(30.dp))
         },
-            label = { Text(text = "Home",color =  Color.Black) }, selected = (selectedIndex.value == 0), onClick = {
-
+            label = { Text(text = "Home",
+                color =  Color.White) },
+            selected = (selectedIndex.value == 0),
+            onClick = {
+                navController.navigate(ROUTE_HOME) {
+                    popUpTo(ROUTE_HOME) { inclusive = true }
+                }
             })
 
         BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Favorite,"",tint = Color.Black)
+            Image(painter = painterResource(id = R.drawable.search1),
+                contentDescription = "null",
+                modifier = Modifier
+                    .width(30.dp)
+                    .height(30.dp))
         },
-            label = { Text(text = "Favorite",color =  Color.Black) }, selected = (selectedIndex.value == 1), onClick = {
-
+            label = { Text(text = "Search",
+                color =  Color.White) },
+            selected = (selectedIndex.value == 0),
+            onClick = {
+                navController.navigate(ROUTE_ADD_PRODUCT) {
+                    popUpTo(ROUTE_HOME) { inclusive = true }
+                }
             })
 
         BottomNavigationItem(icon = {
-            Icon(imageVector = Icons.Default.Person, "",tint = Color.Black)
+            Image(painter = painterResource(id = R.drawable.cart),
+                contentDescription = "null",
+                modifier = Modifier
+                    .width(30.dp)
+                    .height(30.dp))
+        },
+            label = { Text(text = "My cart",
+                color =  Color.White) },
+            selected = (selectedIndex.value == 1),
+            onClick = {
+                navController.navigate(ROUTE_SEARCH) {
+                    popUpTo(ROUTE_HOME) { inclusive = true }
+                }
+            })
+
+        BottomNavigationItem(icon = {
+            Image(painter = painterResource(id = R.drawable.profile),
+                contentDescription = "null",
+                modifier = Modifier
+                    .width(30.dp)
+                    .height(30.dp))
         },
             label = { Text(
                 text = "Profile",
-                color =  Color.Black) },
+                color =  Color.White) },
             selected = (selectedIndex.value == 2),
             onClick = {
 
-                navController.navigate(ROUTE_SEARCH) {
+                navController.navigate(ROUTE_DASHBOARD) {
                     popUpTo(ROUTE_HOME) { inclusive = true }
                 }
 

@@ -420,7 +420,7 @@ fun saveToFirestore(
                 .setPositiveButton("OK") { _, _ ->
                     // Optional: Add actions when OK is clicked
                 }
-                .setIcon(R.drawable.logo)
+                .setIcon(R.drawable.picture2)
                 .setCancelable(false)
 
             val alertDialog = dialogBuilder.create()

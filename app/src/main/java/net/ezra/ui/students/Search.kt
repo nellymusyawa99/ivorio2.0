@@ -2,8 +2,13 @@ package net.ezra.ui.students
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -27,16 +32,23 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialogDefaults.containerColor
+import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import net.ezra.R
 import net.ezra.navigation.ROUTE_HOME
@@ -92,7 +104,7 @@ fun Search(navController: NavHostController) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = "Students")
+                    Text(text = "Reach Us")
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -111,7 +123,7 @@ fun Search(navController: NavHostController) {
 
 
                 colors = topAppBarColors(
-        containerColor = Color(0xff0FB06A),
+        containerColor = Color(0xffA865B5),
 
 
         titleContentColor = Color.White,
@@ -119,64 +131,65 @@ fun Search(navController: NavHostController) {
             )
         },
 
+
+
+
         content = {
-            Column(
-
-                modifier = Modifier
-                    .background(Color(0xff9AEDC9))
-                    .fillMaxSize()
-
-            ) {
-
-                Spacer(modifier = Modifier.height(55.dp))
-
-                TextField(
-                    value = searchText,
-                    onValueChange = { searchText = it },
-                    placeholder = { Text("Search by name..") },
-                    modifier = Modifier.fillMaxWidth(),
-                    trailingIcon = {
-                        Icon(imageVector = Icons.Default.Search,
-                            contentDescription = "emailIcon"
-                        ) },
-
-                )
-
-                Spacer(modifier = Modifier.height(5.dp))
 
 
-    LazyVerticalGrid(columns = GridCells.Fixed(2),) {
 
-    items(filteredData) { item ->
+                    //  }
+                    //TextField(
+                    //   value = searchText,
+                    //   onValueChange = { searchText = it },
+                    //   placeholder = { Text("Search by name..") },
+                    //    modifier = Modifier.fillMaxWidth(),
+                    //    trailingIcon = {
+                    //       Icon(imageVector = Icons.Default.Search,
+                    //        contentDescription = "emailIcon"
+                    //     ) },
 
-        Column (
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize()
-                ,
-            horizontalAlignment = Alignment.CenterHorizontally
-
-        ){
-
-            SubcomposeAsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(item.imageUrl)
-                    .crossfade(true)
-                    .build(),
-                loading = {
-                    CircularProgressIndicator()
-                },
-                contentDescription = item.studentName,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(10))
-                    .size(150.dp)
-
-            )
-
-            item.studentName?.let { Text(text = it) }
-            item.phone?.let { Text(text = it) }
+                    //  )
 
 
+
+
+                    LazyVerticalGrid(columns = GridCells.Fixed(2),) {
+
+                        items(filteredData) { item ->
+
+                            Column(
+                                modifier = Modifier
+                                    .padding(it)
+                                    .fillMaxSize(),
+                                horizontalAlignment = Alignment.CenterHorizontally
+
+                            ) {
+
+                                SubcomposeAsyncImage(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data(item.imageUrl)
+                                        .crossfade(true)
+                                        .build(),
+                                    loading = {
+                                        CircularProgressIndicator()
+                                    },
+                                    contentDescription = item.studentName,
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(10))
+                                        .size(150.dp)
+
+                                )
+
+                                item.studentName?.let { Text(text = it) }
+                                item.phone?.let { Text(text = it) }
+
+
+                            }
+
+                        }
+
+                    }
 
 
 
@@ -185,21 +198,8 @@ fun Search(navController: NavHostController) {
 
 
 
-
-
-        }
-
-    }
 
 }
-
-            }
-        },
-
-
-        )
-
-
-
+    )
 }
 

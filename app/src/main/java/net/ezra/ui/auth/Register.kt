@@ -72,8 +72,8 @@ fun SignUpScreen(navController: NavController, onSignUpSuccess: () -> Unit) {
         if (isLoading) {
             CircularProgressIndicator(modifier = Modifier.size(48.dp))
         } else {
-            Button(
-                colors = ButtonDefaults.buttonColors(Color(0xff0FB06A)),
+            OutlinedButton(
+                colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
                 onClick = {
                     if (email.isBlank()){
                             error = "Email is required"
@@ -97,22 +97,23 @@ fun SignUpScreen(navController: NavController, onSignUpSuccess: () -> Unit) {
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Sign Up")
+                Text("Sign Up",
+                color = Color.White)
             }
 
 
-            androidx.compose.material3.Text(
-                modifier = Modifier
+           // androidx.compose.material3.Text(
+               // modifier = Modifier
 
-                    .clickable {
-                        navController.navigate(ROUTE_LOGIN) {
-                            popUpTo(ROUTE_REGISTER) { inclusive = true }
-                        }
-                    },
-                text = "go to login",
-                textAlign = TextAlign.Center,
-                color = androidx.compose.material3.MaterialTheme.colorScheme.onSurface
-            )
+                  //  .clickable {
+                      //  navController.navigate(ROUTE_LOGIN) {
+                      //      popUpTo(ROUTE_REGISTER) { inclusive = true }
+                    //    }
+                  //  },
+                //text = "Not a member? Go to Register",
+               // textAlign = TextAlign.Center,
+              //  color = androidx.compose.material3.MaterialTheme.colorScheme.onSurface
+           // )
 
         }
 

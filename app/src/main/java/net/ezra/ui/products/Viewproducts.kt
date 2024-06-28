@@ -87,7 +87,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = "Products",fontSize = 30.sp, color = Color.White)
+                    Text(text = " View Products",fontSize = 30.sp, color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -102,7 +102,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
                 },
 
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xff0FB06A),
+                    containerColor = Color(0xff00308F),
                     titleContentColor = Color.White,
 
                     )
@@ -113,7 +113,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xff9AEDC9))
+                    .background(Color(0xffFFFFFF))
             ) {
                 if (isLoading) {
                     // Progress indicator
@@ -141,7 +141,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
                         // Load More Button
                         if (displayedProductCount < productList.size) {
                             Button(
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xff0FB06A)),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffFFFFFF)),
                                 onClick = { displayedProductCount += 1 },
                                 modifier = Modifier.align(Alignment.CenterHorizontally)
                             ) {
