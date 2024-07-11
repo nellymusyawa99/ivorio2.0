@@ -4,10 +4,17 @@ package net.ezra.ui.dashboard
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -34,8 +41,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -77,6 +88,10 @@ fun DashboardScreen(navController: NavHostController)  {
 
 
     val context = LocalContext.current
+    val callLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { _ ->
+        }
+
 
     BackHandler {
         navController.popBackStack()
@@ -117,7 +132,7 @@ fun DashboardScreen(navController: NavHostController)  {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = "My Account", color = Color.White, fontSize = 30.sp)
+                    Text(text = " My Profile", color = Color.White, fontSize = 30.sp)
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color(0xffA865B5),
@@ -133,95 +148,76 @@ fun DashboardScreen(navController: NavHostController)  {
 
             )
         }, content = {
-            LazyColumn(
+LazyColumn {
+    item {
+        Card (
+            modifier = Modifier
+                .size(500.dp)
+                .padding(8.dp),
+            shape = RoundedCornerShape(15.dp),
+            elevation = 8.dp
+        ){
+            Column(
                 modifier = Modifier
-                    .background(Color(0xffFFFFFF))
-                    .fillMaxSize()
+                    .padding(10.dp)
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                Text(
+                    text = "Welcome User",
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontFamily = FontFamily.Cursive,
+                    fontSize = 50.sp
 
-            ) {
+                )
 
-                item{
+                Text(
+                       text = "Order More and Get AMAZING OFFERS NOW!!!! ",
+                       fontFamily = FontFamily.Cursive,
+                       fontWeight = FontWeight.Bold,
+                       color = Color.Black,
+                       fontSize = 30.sp
+                   )
 
 
-                Spacer(modifier = Modifier.height(90.dp))
-
-                Box {
-
-                    Image(
-                        painter = painterResource(id = R.drawable.job),
-                        contentDescription = null,
+                    Text(
+                        text = stringResource(id = R.string.call),
+                        fontSize = 30.sp,
                         modifier = Modifier
-                            .height(500.dp)
-                            .width(500.dp)
+                            .padding(16.dp)
+                            .clickable {
+                                val intent = Intent(Intent.ACTION_DIAL)
+                                intent.data = Uri.parse("tel:+254722281016")
+                                callLauncher.launch(intent)
+                            }
                     )
 
-                }
+                Text(text = "Payments made through :",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 30.sp)
+
+                Image(painter = painterResource(id = net.ezra.R.drawable.money),
+                                   contentDescription = null, )
 
 
-                Spacer(modifier = Modifier.height(5.dp))
 
-
-                androidx.compose.material3.Text(
-                    text = "Contact Us",
-                    color = Color.Black,
+                Text(text = "Our Location: Nkubu Town in Meru county, Building name: Central Plaza",
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(5.dp))
+                    fontWeight = FontWeight.Bold)
 
-                Box {
-                    Row {
-                        Image(
-                            painter = painterResource(id = R.drawable.location3),
-                            contentDescription = "null",
-                            modifier = Modifier
-                                .width(30.dp)
-                                .height(30.dp)
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
 
-                        androidx.compose.material3.Text(
-                            text = "Central plaza, Nkubu Town,ground floor room 2,P.O Box 2586(60200)",
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-                Box {
-                    Row {
-                        Image(
-                            painter = painterResource(id = R.drawable.call2),
-                            contentDescription = "null",
-                            modifier = Modifier
-                                .width(30.dp)
-                                .height(30.dp)
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
 
-                        androidx.compose.material3.Text(
-                            text = "+24722281016",
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-                Box {
-                    Row {
-                        Image(
-                            painter = painterResource(id = R.drawable.email2),
-                            contentDescription = "null",
-                            modifier = Modifier
-                                .width(30.dp)
-                                .height(30.dp)
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
 
-                        androidx.compose.material3.Text(
-                            text = "salesivoriolabcare@gmail.com",
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
             }
+
         }
+
+
+    }
+}
         }
     )
 }

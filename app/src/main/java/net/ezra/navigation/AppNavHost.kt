@@ -83,12 +83,16 @@ fun AppNavHost(
             LoginScreen(navController = navController){}
         }
 
-        composable(ROUTE_ADD_PRODUCT) {
-            AddProductScreen(navController = navController){}
-        }
+       // composable(ROUTE_ADD_PRODUCT) {
+       //     AddProductScreen(navController = navController){}
+      //  }
 
         composable(ROUTE_VIEW_PROD) {
             ProductListScreen(navController = navController, products = listOf() )
+        }
+
+        composable(ROUTE_ADD_PRODUCTS) {
+            AddProductScreen(navController = navController){}
         }
 
 

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -56,6 +57,7 @@ import net.ezra.navigation.ROUTE_HOME
 import net.ezra.navigation.ROUTE_VIEW_PROD
 import net.ezra.navigation.ROUTE_VIEW_STUDENTS
 import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.ui.text.font.FontWeight
 
 data class Product(
     var id: String = "",
@@ -73,7 +75,7 @@ data class Product(
 fun ProductListScreen(navController: NavController, products: List<Product>) {
     var isLoading by remember { mutableStateOf(true) }
     var productList by remember { mutableStateOf(emptyList<Product>()) }
-    var displayedProductCount by remember { mutableStateOf(1) }
+    var displayedProductCount by remember { mutableStateOf(10) }
     var progress by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
@@ -102,7 +104,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
                 },
 
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xff00308F),
+                    containerColor = Color(0xffA865B5),
                     titleContentColor = Color.White,
 
                     )
@@ -141,11 +143,13 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
                         // Load More Button
                         if (displayedProductCount < productList.size) {
                             Button(
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffFFFFFF)),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xffA865B5)),
                                 onClick = { displayedProductCount += 1 },
                                 modifier = Modifier.align(Alignment.CenterHorizontally)
                             ) {
-                                Text(text = "Load More")
+                                Text(text = "More",
+                                    color = Color.White
+                                )
                             }
                         }
                     }
@@ -161,30 +165,49 @@ fun ProductListItem(product: Product, onItemClick: (String) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onItemClick(product.id) }
+            .height(150.dp)
+            //.clickable { onItemClick(product.id) }
     ) {
-        Row(
+        LazyRow(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(16.dp)
         ) {
+            item{
             // Product Image
             Image(
                 painter = rememberImagePainter(product.imageUrl),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(60.dp)
+                    .size(80.dp)
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             // Product Details
             Column {
-                Text(text = product.name)
-                Text(text = "Price: ${product.price}")
+                Text(text = product.name,
+                    fontWeight = FontWeight.Bold)
+                Text(text = "Price: ${product.price}",
+                    fontWeight = FontWeight.Bold)
+                Button(
+                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+                                    onClick = { /* Handle add to cart action */ },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp)
+                                ) {
+                                    Text(text = "Pay Now",
+                                        color = Color.White)
+                                }
             }
+        }
         }
     }
 }
+
+
+
+
 
 private suspend fun fetchProducts(onSuccess: (List<Product>) -> Unit) {
     val firestore = Firebase.firestore

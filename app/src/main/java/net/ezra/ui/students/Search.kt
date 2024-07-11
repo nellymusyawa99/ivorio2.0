@@ -4,6 +4,7 @@ package net.ezra.ui.students
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -53,6 +54,7 @@ import androidx.navigation.NavController
 import net.ezra.R
 import net.ezra.navigation.ROUTE_HOME
 import net.ezra.navigation.ROUTE_SEARCH
+import net.ezra.ui.products.Product
 
 
 data class YourDataClass(
@@ -66,6 +68,7 @@ data class YourDataClass(
     val location: String? = ""
 
 )
+
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "ResourceAsColor")
@@ -100,11 +103,17 @@ fun Search(navController: NavHostController) {
             listener.remove()
         }
     }
+
+
+
+
+
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = "Reach Us")
+                    Text(text = "My cart")
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -135,6 +144,7 @@ fun Search(navController: NavHostController) {
 
 
         content = {
+
 
 
 

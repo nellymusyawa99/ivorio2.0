@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -23,7 +24,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.R
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -41,579 +44,612 @@ import net.ezra.navigation.ROUTE_HOME
 import net.ezra.navigation.ROUTE_VIEW_PROD
 import java.util.*
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
-    var productName by remember { mutableStateOf("") }
-    var productDescription by remember { mutableStateOf("") }
-    var productPrice by remember { mutableStateOf("") }
-    var productImageUri by remember { mutableStateOf<Uri?>(null) }
 
-    // Track if fields are empty
-    var productNameError by remember { mutableStateOf(false) }
-    var productDescriptionError by remember { mutableStateOf(false) }
-    var productPriceError by remember { mutableStateOf(false) }
-    var productImageError by remember { mutableStateOf(false) }
-
-    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let {
-            productImageUri = it
-        }
-    }
-
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(text = "Products", fontSize = 30.sp, color = Color.White)
-                },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        navController.navigate(ROUTE_HOME)
-                    }) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            "backIcon",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xffA865B5),
-                    titleContentColor = Color.White,
-                )
-            )
-        },
-        content = {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color(0xffFFFFFF))
-            ) {
-                item {
-                    Row {
-                        Card(
-                            modifier = Modifier
-                                .size(150.dp),
-                            RoundedCornerShape(15.dp)
-
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = net.ezra.R.drawable.gloves),
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-
-                                ) {
-
-                                    Text(
-                                        text = "Latex gloves",
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                }
-                                Spacer(modifier = Modifier.height(15.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                )
-
-                                {
-                                    Text(
-                                        text = "Price @400 ksh ",
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.width(30.dp))
-
-                        Card(
-                            modifier = Modifier
-                                .size(150.dp),
-                            RoundedCornerShape(15.dp)
-
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = net.ezra.R.drawable.glucostixs),
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-
-                                ) {
-
-                                    Text(
-                                        text = " Glucostixs",
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                }
-                                Spacer(modifier = Modifier.height(15.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                )
-
-                                {
-                                    Text(
-                                        text = "Price @1500 ksh ",
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-
-                            }
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Row {
-                        Card(
-                            modifier = Modifier
-                                .size(150.dp),
-                            RoundedCornerShape(15.dp)
-
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = net.ezra.R.drawable.pregnancy),
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-
-                                ) {
-
-                                    Text(
-                                        text = "Pregnancy Strips",
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                }
-                                Spacer(modifier = Modifier.height(15.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                )
-
-                                {
-                                    Text(
-                                        text = "Price @50 ksh per strip",
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.width(30.dp))
-
-                        Card(
-                            modifier = Modifier
-                                .size(150.dp),
-                            RoundedCornerShape(15.dp)
-
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = net.ezra.R.drawable.glucometer),
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-
-                                ) {
-
-                                    Text(
-                                        text = " Glucometer",
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                }
-                                Spacer(modifier = Modifier.height(15.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                )
-
-                                {
-                                    Text(
-                                        text = "Price @4500 ksh ",
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-
-                            }
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Row {
-                        Card(
-                            modifier = Modifier
-                                .size(150.dp),
-                            RoundedCornerShape(15.dp)
-
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = net.ezra.R.drawable.antibody),
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-
-                                ) {
-
-                                    Text(
-                                        text = "Salmonella Antibody",
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                }
-                                Spacer(modifier = Modifier.height(15.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                )
-
-                                {
-                                    Text(
-                                        text = "Price @50 ksh per strip",
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.width(30.dp))
-
-                        Card(
-                            modifier = Modifier
-                                .size(150.dp),
-                            RoundedCornerShape(15.dp)
-
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = net.ezra.R.drawable.salmonella),
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-
-                                ) {
-
-                                    Text(
-                                        text = "Salmonella Antigen",
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                }
-                                Spacer(modifier = Modifier.height(15.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                )
-
-                                {
-                                    Text(
-                                        text = "Price @4500 ksh ",
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-
-                            }
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Row {
-                        Card(
-                            modifier = Modifier
-                                .size(150.dp),
-                            RoundedCornerShape(15.dp)
-
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = net.ezra.R.drawable.gloves2),
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-
-                                ) {
-
-                                    Text(
-                                        text = "Paper gloves",
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                }
-                                Spacer(modifier = Modifier.height(15.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                )
-
-                                {
-                                    Text(
-                                        text = "Price @50 ksh per strip",
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.width(30.dp))
-
-                        Card(
-                            modifier = Modifier
-                                .size(150.dp),
-                            RoundedCornerShape(15.dp)
-
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = net.ezra.R.drawable.malaria),
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-
-                                ) {
-
-                                    Text(
-                                        text = "Malaria kit",
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                }
-                                Spacer(modifier = Modifier.height(15.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                )
-
-                                {
-                                    Text(
-                                        text = "Price @4500 ksh ",
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-
-                            }
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Row {
-                        Card(
-                            modifier = Modifier
-                                .size(150.dp),
-                            RoundedCornerShape(15.dp)
-
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = net.ezra.R.drawable.needle1),
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-
-                                ) {
-
-                                    Text(
-                                        text = "Needle G21",
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                }
-                                Spacer(modifier = Modifier.height(15.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                )
-
-                                {
-                                    Text(
-                                        text = "Price @50 ksh per strip",
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.width(30.dp))
-
-                        Card(
-                            modifier = Modifier
-                                .size(150.dp),
-                            RoundedCornerShape(15.dp)
-
-                        ) {
-                            Box {
-                                Image(
-                                    painter = painterResource(id = net.ezra.R.drawable.needle2),
-                                    contentDescription = null
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.TopCenter
-
-                                ) {
-
-                                    Text(
-                                        text = "Needle G22",
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                }
-                                Spacer(modifier = Modifier.height(15.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize(),
-                                    contentAlignment = Alignment.BottomCenter
-                                )
-
-                                {
-                                    Text(
-                                        text = "Price @4500 ksh ",
-                                        fontWeight = FontWeight.Bold,
-                                    )
-                                }
-
-                            }
-                        }
-                    }
-
-
-
-
-
-
-
-
-
-
-                }
-
-
-
-
-
-
-
-
-
-
-
-                //               item {
-                //                  if (productImageUri != null) {
-                // Display selected image
+//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
+//    var productName by remember { mutableStateOf("") }
+//    var productDescription by remember { mutableStateOf("") }
+//    var productPrice by remember { mutableStateOf("") }
+//    var productImageUri by remember { mutableStateOf<Uri?>(null) }
+//
+//    // Track if fields are empty
+//    var productNameError by remember { mutableStateOf(false) }
+//    var productDescriptionError by remember { mutableStateOf(false) }
+//    var productPriceError by remember { mutableStateOf(false) }
+//    var productImageError by remember { mutableStateOf(false) }
+//
+//    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+//        uri?.let {
+//            productImageUri = it
+//        }
+//
+//    }
+//
+//    Scaffold(
+//        topBar = {
+//            CenterAlignedTopAppBar(
+//                title = {
+//                    Text(text = "Products", fontSize = 30.sp, color = Color.White)
+//                },
+//                navigationIcon = {
+//                    IconButton(onClick = {
+//                        navController.navigate(ROUTE_HOME)
+//                    }) {
+//                        Icon(
+//                            Icons.AutoMirrored.Filled.ArrowBack,
+//                            "backIcon",
+//                            tint = Color.White
+//                        )
+//                    }
+//                },
+//                colors = TopAppBarDefaults.topAppBarColors(
+//                    containerColor = Color(0xffA865B5),
+//                    titleContentColor = Color.White,
+//                )
+//            )
+//        },
+//        content = {
+//            LazyColumn(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .background(Color(0xffFFFFFF))
+//            ) {
+//                item {
+//                    LazyRow {
+//                        item{
+//                        Card(
+//                            modifier = Modifier
+//                                .size(300.dp)
+//                                .padding(8.dp),
+//                            shape = RoundedCornerShape(15.dp),
+//                            elevation = 8.dp
+//                        ) {
+//                            Column(
+//                                modifier = Modifier.fillMaxSize(),
+//                                verticalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//                                Image(
+//                                    painter = painterResource(id = net.ezra.R.drawable.gloves),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .height(100.dp)
+//                                        .clip(shape = RoundedCornerShape(15.dp))
+//                                )
+//
+//                                Text(
+//                                    text = "Gloves",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Text(
+//                                    text = "Price: 400 ksh",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Button(
+//                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+//                                    onClick = {  },
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(8.dp)
+//                                ) {
+//                                    Text(text = "Pay Now",
+//                                        color = Color.White)
+//                                }
+//                            }
+//                        }
+//
+//
+//                        Spacer(modifier = Modifier.width(10.dp))
+//
+//                        Card(
+//                            modifier = Modifier
+//                                .size(300.dp)
+//                                .padding(8.dp),
+//                            shape = RoundedCornerShape(15.dp),
+//                            elevation = 8.dp
+//                        ) {
+//                            Column(
+//                                modifier = Modifier.fillMaxSize(),
+//                                verticalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//                                Image(
+//                                    painter = painterResource(id = net.ezra.R.drawable.glucostixs),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .height(100.dp)
+//                                        .clip(shape = RoundedCornerShape(15.dp))
+//                                )
+//
+//                                Text(
+//                                    text = "Glucostixs",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Text(
+//                                    text = "Price: 1500 ksh",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Button(
+//                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+//                                    onClick = { /* Handle add to cart action */ },
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(8.dp)
+//                                ) {
+//                                    Text(text = "Pay Now",
+//                                        color = Color.White)
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                    }
+//
+//                    Spacer(modifier = Modifier.height(20.dp))
+//
+//                    LazyRow {
+//                        item{
+//                        Card(
+//                            modifier = Modifier
+//                                .size(300.dp)
+//                                .padding(8.dp),
+//                            shape = RoundedCornerShape(15.dp),
+//                            elevation = 8.dp //
+//                        ) {
+//                            Column(
+//                                modifier = Modifier.fillMaxSize(),
+//                                verticalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//                                Image(
+//                                    painter = painterResource(id = net.ezra.R.drawable.pregnancy),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .height(100.dp)
+//                                        .clip(shape = RoundedCornerShape(15.dp))
+//                                )
+//
+//                                Text(
+//                                    text = "Pregnancy kit",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Text(
+//                                    text = "Price: 800 ksh",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Button(
+//                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+//                                    onClick = { /* Handle add to cart action */ },
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(8.dp)
+//                                ) {
+//                                    Text(text = "Add to Cart",
+//                                        color = Color.White)
+//                                }
+//                            }
+//                        }
+//                        Spacer(modifier = Modifier.width(10.dp))
+//
+//                        Card(
+//                            modifier = Modifier
+//                                .size(300.dp)
+//                                .padding(8.dp),
+//                            shape = RoundedCornerShape(15.dp),
+//                            elevation = 8.dp
+//                        ) {
+//                            Column(
+//                                modifier = Modifier.fillMaxSize(),
+//                                verticalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//                                Image(
+//                                    painter = painterResource(id = net.ezra.R.drawable.glucometer),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .height(100.dp)
+//                                        .clip(shape = RoundedCornerShape(15.dp))
+//                                )
+//
+//                                Text(
+//                                    text = "Glucometer",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Text(
+//                                    text = "Price: 400 ksh",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Button(
+//                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+//                                    onClick = { /* Handle add to cart action */ },
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(8.dp)
+//                                ) {
+//                                    Text(text = "Add to Cart",
+//                                        color = Color.White)
+//                                }
+//                            }
+//                        }
+//                    }
+//                    }
+//                    Spacer(modifier = Modifier.height(20.dp))
+//
+//                    LazyRow {
+//                        item{
+//                        Card(
+//                            modifier = Modifier
+//                                .size(300.dp)
+//                                .padding(8.dp),
+//                            shape = RoundedCornerShape(15.dp),
+//                            elevation = 8.dp
+//                        ) {
+//                            Column(
+//                                modifier = Modifier.fillMaxSize(),
+//                                verticalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//                                Image(
+//                                    painter = painterResource(id = net.ezra.R.drawable.antibody),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .height(100.dp)
+//                                        .clip(shape = RoundedCornerShape(15.dp))
+//                                )
+//
+//                                Text(
+//                                    text = "Salmonella Antibody",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Text(
+//                                    text = "Price: 400 ksh",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Button(
+//                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+//                                    onClick = { /* Handle add to cart action */ },
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(8.dp)
+//                                ) {
+//                                    Text(text = "Add to Cart",
+//                                        color = Color.White)
+//                                }
+//                            }
+//                        }
+//                        Spacer(modifier = Modifier.width(10.dp))
+//
+//                        Card(
+//                            modifier = Modifier
+//                                .size(300.dp)
+//                                .padding(8.dp),
+//                            shape = RoundedCornerShape(15.dp),
+//                            elevation = 8.dp
+//                        ) {
+//                            Column(
+//                                modifier = Modifier.fillMaxSize(),
+//                                verticalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//                                Image(
+//                                    painter = painterResource(id = net.ezra.R.drawable.salmonella),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .height(100.dp)
+//                                        .clip(shape = RoundedCornerShape(15.dp))
+//                                )
+//
+//                                Text(
+//                                    text = "Salmonella Antigen",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Text(
+//                                    text = "Price: 400 ksh",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Button(
+//                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+//                                    onClick = { /* Handle add to cart action */ },
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(8.dp)
+//                                ) {
+//                                    Text(text = "Add to Cart",
+//                                        color = Color.White)
+//                                }
+//                            }
+//                        }
+//                    }
+//                    }
+//
+//                    Spacer(modifier = Modifier.height(20.dp))
+//
+//                    LazyRow {
+//                        item{
+//                        Card(
+//                            modifier = Modifier
+//                                .size(300.dp)
+//                                .padding(8.dp),
+//                            shape = RoundedCornerShape(15.dp),
+//                            elevation = 8.dp
+//                        ) {
+//                            Column(
+//                                modifier = Modifier.fillMaxSize(),
+//                                verticalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//                                Image(
+//                                    painter = painterResource(id = net.ezra.R.drawable.gloves2),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .height(100.dp)
+//                                        .clip(shape = RoundedCornerShape(15.dp))
+//                                )
+//
+//                                Text(
+//                                    text = "Gloves",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Text(
+//                                    text = "Price: 400 ksh",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Button(
+//                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+//                                    onClick = {  },
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(8.dp)
+//                                ) {
+//                                    Text(text = "Add to Cart",
+//                                        color = Color.White)
+//                                }
+//                            }
+//                        }
+//                        Spacer(modifier = Modifier.width(10.dp))
+//
+//                        Card(
+//                            modifier = Modifier
+//                                .size(300.dp)
+//                                .padding(8.dp),
+//                            shape = RoundedCornerShape(15.dp),
+//                            elevation = 8.dp
+//                        ) {
+//                            Column(
+//                                modifier = Modifier.fillMaxSize(),
+//                                verticalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//                                Image(
+//                                    painter = painterResource(id = net.ezra.R.drawable.malaria),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .height(100.dp)
+//                                        .clip(shape = RoundedCornerShape(15.dp))
+//                                )
+//
+//                                Text(
+//                                    text = "Malaria kit",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Text(
+//                                    text = "Price: 400 ksh",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Button(
+//                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+//                                    onClick = { /* Handle add to cart action */ },
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(8.dp)
+//                                ) {
+//                                    Text(text = "Add to cart",
+//                                        color = Color.White)
+//                                }
+//                            }
+//                        }
+//                    }
+//                    }
+//                    Spacer(modifier = Modifier.height(20.dp))
+//
+//                    LazyRow {
+//                        item{
+//                        Card(
+//                            modifier = Modifier
+//                                .size(300.dp)
+//                                .padding(8.dp),
+//                            shape = RoundedCornerShape(15.dp),
+//                            elevation = 8.dp
+//                        ) {
+//                            Column(
+//                                modifier = Modifier.fillMaxSize(),
+//                                verticalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//                                Image(
+//                                    painter = painterResource(id = net.ezra.R.drawable.needle1),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .height(100.dp)
+//                                        .clip(shape = RoundedCornerShape(15.dp))
+//                                )
+//
+//                                Text(
+//                                    text = "Needle G21",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Text(
+//                                    text = "Price: 400 ksh",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Button(
+//                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+//                                    onClick = { /* Handle add to cart action */ },
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(8.dp)
+//                                ) {
+//                                    Text(text = "Add to Cart",
+//                                        color = Color.White)
+//                                }
+//                            }
+//                        }
+//
+//                        Spacer(modifier = Modifier.width(10.dp))
+//
+//                        Card(
+//                            modifier = Modifier
+//                                .size(300.dp)
+//                                .padding(8.dp),
+//                            shape = RoundedCornerShape(15.dp),
+//                            elevation = 8.dp
+//                        ) {
+//                            Column(
+//                                modifier = Modifier.fillMaxSize(),
+//                                verticalArrangement = Arrangement.SpaceBetween
+//                            ) {
+//                                Image(
+//                                    painter = painterResource(id = net.ezra.R.drawable.needle2),
+//                                    contentDescription = null,
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .height(100.dp)
+//                                        .clip(shape = RoundedCornerShape(15.dp))
+//                                )
+//
+//                                Text(
+//                                    text = "Needle G22",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Text(
+//                                    text = "Price: 400 ksh",
+//                                    fontWeight = FontWeight.Bold,
+//                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+//                                )
+//
+//                                Button(
+//                                    colors = ButtonDefaults.buttonColors(Color(0xffA865B5)),
+//                                    onClick = { },
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .padding(8.dp)
+//                                ) {
+//                                    Text(text = "Add to Cart",
+//                                        color = Color.White)
+//                                }
+//                            }
+//                        }
+//                    }
+//                    }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//                }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+//                               item {
+//                                  if (productImageUri != null) {
+                //Display selected image
 //                        Image(
-                //                           painter = rememberImagePainter(productImageUri), // Using rememberImagePainter with Uri
-                //                          contentDescription = null,
-                //                         modifier = Modifier
-                //                              .fillMaxWidth()
-                //                             .height(200.dp)
-                //                      )
-                //                   } else {
+//                                           painter = rememberImagePainter(productImageUri), // Using rememberImagePainter with Uri
+//                                          contentDescription = null,
+//                                         modifier = Modifier
+//                                              .fillMaxWidth()
+//                                             .height(200.dp)
+//                                      )
+//                                   } else {
                 // Display placeholder if no image selected
-                //                      Box(
-                //                          modifier = Modifier
-                //                             .fillMaxWidth()
-                //                             .height(200.dp),
-                //                         contentAlignment = Alignment.Center
-                //                     ) {
-                //                        Text("No Image Selected", modifier = Modifier.padding(8.dp))
-                //                    }
-                //                }
-                //                Spacer(modifier = Modifier.height(16.dp))
-                //               Button(onClick = { launcher.launch("image/*") }) {
-                //                    Text("Select Image")
-                //                }
-                //                Spacer(modifier = Modifier.height(16.dp))
-                //                 TextField(
-                //                     value = productName,
-                //                     onValueChange = { productName = it },
-                //                    label = { Text("Product Name") },
-                //                   modifier = Modifier.fillMaxWidth()
-                //                  )
-                //                 Spacer(modifier = Modifier.height(8.dp))
-                //                TextField(
-                //                   value = productDescription,
-                //                   onValueChange = { productDescription = it },
-                //                   label = { Text("Product Description") },
-                //                   modifier = Modifier.fillMaxWidth()
-                //               )
-                //             Spacer(modifier = Modifier.height(8.dp))
-                //             TextField(
-                //                 value = productPrice,
-                //                  onValueChange = { productPrice = it },
-                //                 label = { Text("Product Price") },
-                //                  keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+//                                      Box(
+//                                          modifier = Modifier
+//                                             .fillMaxWidth()
+//                                             .height(200.dp),
+//                                         contentAlignment = Alignment.Center
+//                                     ) {
+//                                        Text("No Image Selected", modifier = Modifier.padding(8.dp))
+//                                    }
+//                                }
+//                                Spacer(modifier = Modifier.height(16.dp))
+//                               Button(onClick = { launcher.launch("image/*") }) {
+//                                    Text("Select Image")
+//                                }
+//                                Spacer(modifier = Modifier.height(16.dp))
+//                                 TextField(
+//                                     value = productName,
+//                                     onValueChange = { productName = it },
+//                                    label = { Text("Product Name") },
+//                                   modifier = Modifier.fillMaxWidth()
+//                                  )
+//                                 Spacer(modifier = Modifier.height(8.dp))
+//                                TextField(
+//                                   value = productDescription,
+//                                  onValueChange = { productDescription = it },
+//                                   label = { Text("Product Description") },
+//                                   modifier = Modifier.fillMaxWidth()
+//                               )
+//                             Spacer(modifier = Modifier.height(8.dp))
+//                             TextField(
+//                                 value = productPrice,
+//                                  onValueChange = { productPrice = it },
+//                                 label = { Text("Product Price") },
+//                                  keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 //                  keyboardActions = KeyboardActions(onDone = { /* Handle Done action */ }),
                 //                 modifier = Modifier.fillMaxWidth()
                 //               )
@@ -632,7 +668,7 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
                 //                    Text("Product Image is required", color = Color.Red)
                 //               }
 
-                //                // Button to add product
+                               // Button to add product
                 //               Button(
                 //                    onClick = {
                 //                        // Reset error flags
@@ -641,14 +677,14 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
                 //                       productPriceError = productPrice.isBlank()
                 //                        productImageError = productImageUri == null
 //
-                //                       // Add product if all fields are filled
+                                       // Add product if all fields are filled
                 //                      if (!productNameError && !productDescriptionError && !productPriceError && !productImageError) {
                 //                          addProductToFirestore(
                 //                               navController,
                 //                               onProductAdded,
                 //                              productName,
                 //                                productDescription,
-                //                                productPrice.toDouble(),
+                                                //productPrice.toDouble(),
                 //                               productImageUri
                 //                            )
                 //                       }
@@ -658,15 +694,22 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
                 //                Text("Add Product")
                 //           }
                 //         }
-            }
 
-        }
-    )
-}
+//
+//                     }
+//
+//                 }
+//            )
+//         }
+//
+//
+
+
+
 
 //private fun addProductToFirestore(navController: NavController, onProductAdded: () -> Unit, productName: String, productDescription: String, productPrice: Double, productImageUri: Uri?) {
  //   if (productName.isEmpty() || productDescription.isEmpty() || productPrice.isNaN() || productImageUri == null) {
-        // Validate input fields
+               // Validate input fields
  //       return
   //  }
 
@@ -676,60 +719,196 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
  //   val productData = hashMapOf(
  //       "name" to productName,
  //      "description" to productDescription,
- //       "price" to productPrice,
- //       "imageUrl" to ""
- //  )
-
- //   firestore.collection("products").document(productId)
-  //      .set(productData)
-  //      .addOnSuccessListener {
- //           uploadImageToStorage(productId, productImageUri) { imageUrl ->
+        //"price" to productPrice,
+//        "imageUrl" to ""
+//   )
+//
+//    firestore.collection("products").document(productId)
+//        .set(productData)
+//        .addOnSuccessListener {
+//            uploadImageToStorage(productId, productImageUri) { imageUrl ->
 //                firestore.collection("products").document(productId)
 //                   .update("imageUrl", imageUrl)
- //                   .addOnSuccessListener {
- //                       // Display toast message
-  //                      Toast.makeText(
- //                           navController.context,
- //                           "Product added successfully!",
- //                           Toast.LENGTH_SHORT
+//                   .addOnSuccessListener {
+//                        // Display toast message
+//                        Toast.makeText(
+//                            navController.context,
+//                            "Product added successfully!",
+//                            Toast.LENGTH_SHORT
 //                        ).show()
-
-                        // Navigate to another screen
- //                       navController.navigate(ROUTE_HOME)
-
-                        // Invoke the onProductAdded callback
-  //                      onProductAdded()
-  //                  }
-    //                .addOnFailureListener { e ->
-                        // Handle error updating product document
-  //                  }
-   //         }
-   //     }
-   //     .addOnFailureListener { e ->
-            // Handle error adding product to Firestore
-    //    }
+//
+//                        // Navigate to another screen
+//                        navController.navigate(ROUTE_HOME)
+//
+//                        // Invoke the onProductAdded callback
+//                        onProductAdded()
+//                    }
+//                    .addOnFailureListener { e ->
+//                        // Handle error updating product document
+//                    }
+//            }
+//        }
+//        .addOnFailureListener { e ->
+//            // Handle error adding product to Firestore
+//        }
 //}
-
+//
 //private fun uploadImageToStorage(productId: String, imageUri: Uri?, onSuccess: (String) -> Unit) {
 //    if (imageUri == null) {
- //       onSuccess("")
-  //      return
- //   }
-
-  //  val storageRef = Firebase.storage.reference
- //   val imagesRef = storageRef.child("products/$productId.jpg")
-
-  //  imagesRef.putFile(imageUri)
-  //      .addOnSuccessListener { taskSnapshot ->
-  //          imagesRef.downloadUrl
-  //              .addOnSuccessListener { uri ->
- //                   onSuccess(uri.toString())
- //               }
+//        onSuccess("")
+//        return
+//    }
+//
+//    val storageRef = Firebase.storage.reference
+//    val imagesRef = storageRef.child("products/$productId.jpg")
+//
+//    imagesRef.putFile(imageUri)
+//        .addOnSuccessListener { taskSnapshot ->
+//            imagesRef.downloadUrl
+//                .addOnSuccessListener { uri ->
+//                    onSuccess(uri.toString())
+//                }
 //                .addOnFailureListener {
- //                   // Handle failure to get download URL
- //               }
+//                    // Handle failure to get download URL
+//                }
 //        }
- //      .addOnFailureListener {
-  //          // Handle failure to upload image
- //       }
+//       .addOnFailureListener {
+//            // Handle failure to upload image
+//        }
 //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

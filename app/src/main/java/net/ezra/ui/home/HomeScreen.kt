@@ -40,6 +40,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -66,6 +67,7 @@ import coil.size.Size
 import net.ezra.R
 import net.ezra.navigation.ROUTE_ABOUT
 import net.ezra.navigation.ROUTE_ADD_PRODUCT
+import net.ezra.navigation.ROUTE_ADD_PRODUCTS
 import net.ezra.navigation.ROUTE_ADD_STUDENTS
 import net.ezra.navigation.ROUTE_DASHBOARD
 import net.ezra.navigation.ROUTE_HOME
@@ -83,10 +85,10 @@ fun HomeScreen(navController: NavHostController) {
 
     var isDrawerOpen by remember { mutableStateOf(false) }
 
-    val callLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { _ ->
+  //  val callLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
+   //     rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { _ ->
 
-        }
+   //     }
 
     Scaffold(
        // topBar = {
@@ -147,26 +149,69 @@ fun HomeScreen(navController: NavHostController) {
                         .background(Color(0xffFFFFFF)),
                 ) {
                     item {
-                        Spacer(modifier = Modifier.height(70.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Row {
+                            LazyRow {
+                                item {
+                                    Spacer(modifier = Modifier.width(10.dp))
+                                    Text(
+                                        text = "Glucostixs",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 15.sp,
+                                        modifier = Modifier.clickable {
+                                            navController.navigate(ROUTE_ADD_PRODUCT)
+                                        }
+                                    )
+
+
+                                    Spacer(modifier = Modifier.width(20.dp))
+
+                                    Text(text = "Gloves",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 15.sp,
+                                        modifier = Modifier.clickable {
+                                            navController.navigate(ROUTE_ADD_PRODUCT)
+                                        }
+                                    )
+
+                                    Spacer(modifier = Modifier.width(20.dp))
+
+                                    Text(text = "Malaria kit",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 15.sp,
+                                        modifier = Modifier.clickable {
+                                            navController.navigate(ROUTE_ADD_PRODUCT)
+                                        }
+                                    )
+
+                                    Spacer(modifier = Modifier.width(20.dp))
+
+                                    Text(text = "Pregnancy strips",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 15.sp,
+                                        modifier = Modifier.clickable {
+                                            navController.navigate(ROUTE_ADD_PRODUCT)
+                                        }
+                                    )
+
+                                    Spacer(modifier = Modifier.width(20.dp))
+
+                                    Text(text = "Glucometer",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 15.sp,
+                                        modifier = Modifier.clickable {
+                                            navController.navigate(ROUTE_ADD_PRODUCT)
+                                        }
+                                    )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(30.dp))
+
                         LazyRow {
                             item {
-                                Row {
-                                    LazyRow {
-                                        item {
-                                            Text(text = "Test Strips")
 
-                                            Spacer(modifier = Modifier.width(20.dp))
-
-                                            Text(text = "Test Strips")
-
-                                            
-
-
-
-                                        }
-                                    }
-
-                                }
                                 Card(
                                     shape = RoundedCornerShape(20.dp)
                                 ) {
@@ -181,7 +226,8 @@ fun HomeScreen(navController: NavHostController) {
                                 Spacer(modifier = Modifier.width(10.dp))
 
                                 Card(
-                                    shape = RoundedCornerShape(20.dp)
+                                    shape = RoundedCornerShape(20.dp),
+
                                 ) {
                                     Box {
                                         Image(
@@ -201,350 +247,372 @@ fun HomeScreen(navController: NavHostController) {
                                 text = "Categories",
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xffA865B5),
-                                fontSize = 20.sp
+                                fontSize = 30.sp
                             )
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        Row {
+                            Text(
+                                text = "Consumable Reagents",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+
+
+                            Spacer(modifier = Modifier.height(15.dp))
+
+                        Row {
+
+                            Card(
+                                modifier = Modifier
+                                    .size(150.dp),
+                                RoundedCornerShape(15.dp),
+
+
+                            ) {
+                                Box{
+                                    Image(
+                                        painter = painterResource(id = R.drawable.gloves),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(200.dp)
+                                    )
+
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.TopCenter
+
+                                    ) {
+
+                                        androidx.compose.material.Text(
+                                            text = "Surgical gloves",
+                                            fontWeight = FontWeight.Bold
+                                        )
+
+                                    }
+
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.width(30.dp))
+
+                            Card(
+                                modifier = Modifier
+                                    .size(150.dp),
+                                RoundedCornerShape(15.dp)
+
+                            ) {
+                                Box {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.needle1),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(300.dp)
+                                    )
+
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.TopCenter
+
+                                    ) {
+
+                                        androidx.compose.material.Text(
+                                            text = "Needle G21",
+                                            fontWeight = FontWeight.Bold
+                                        )
+
+                                    }
+
+                                }
+                            }
+
+
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        Row {
+                            Card(
+                                modifier = Modifier
+                                    .size(150.dp),
+                                RoundedCornerShape(15.dp)
+
+                            ) {
+                                Box {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.gloves2),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(300.dp)
+                                    )
+
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.TopCenter
+
+                                    ) {
+
+                                        androidx.compose.material.Text(
+                                            text = "Paper gloves",
+                                            fontWeight = FontWeight.Bold
+                                        )
+
+                                    }
+
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.width(30.dp))
+
+                            Card(
+                                modifier = Modifier
+                                    .size(150.dp),
+                                RoundedCornerShape(15.dp)
+
+                            ) {
+                                Box {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.needle2),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(200.dp)
+                                    )
+
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        contentAlignment = Alignment.TopCenter
+
+                                    ) {
+
+                                        androidx.compose.material.Text(
+                                            text = "Needle G22",
+                                            fontWeight = FontWeight.Bold
+                                        )
+
+                                    }
+
+
+                                }
+                            }
+
                         }
 
                         Spacer(modifier = Modifier.height(15.dp))
 
                         Row {
-                            Card(
+                            Text(text = " Click for More",
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Red,
                                 modifier = Modifier
-                                    .size(60.dp),
-                                RoundedCornerShape(10.dp)
-                            ) {
-                                Box {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.first2),
-                                        contentDescription = "filter",
-                                        modifier = Modifier
-                                            .clickable { }
-                                            .height(30.dp)
-                                            .width(70.dp)
-                                            .clip(CircleShape),
+                                    .clickable { navController.navigate(ROUTE_ADD_PRODUCT) }
+                            )
+                        }
 
-                                        )
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize(),
-                                        contentAlignment = Alignment.BottomEnd
-                                    ) {
-                                        Text(text = "First Aid Kit")
-                                    }
-                                }
 
-                            }
+                        Spacer(modifier = Modifier.height(15.dp))
 
-                            Spacer(modifier = Modifier.padding(20.dp))
+
+                        Row {
+                            Text(
+                                text = "Reagents",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+
+
+                        Spacer(modifier = Modifier.height(15.dp))
+
+                        Row {
 
                             Card(
                                 modifier = Modifier
-                                    .size(60.dp),
-                                RoundedCornerShape(10.dp)
-                            ) {
-                                Box {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.first2),
-                                        contentDescription = "filter",
-                                        modifier = Modifier
-                                            .clickable { }
-                                            .height(30.dp)
-                                            .width(70.dp)
-                                            .clip(CircleShape),
+                                    .size(150.dp),
+                                RoundedCornerShape(15.dp)
 
-                                        )
+                            ) {
+                                Box{
+                                    Image(
+                                        painter = painterResource(id = R.drawable.glucometer),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(200.dp)
+                                    )
+
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize(),
-                                        contentAlignment = Alignment.BottomEnd
+                                        contentAlignment = Alignment.TopCenter
+
                                     ) {
-                                        Text(text = "First Aid Kit")
-                                    }
-                                }
-                            }
 
-                            Spacer(modifier = Modifier.padding(20.dp))
-
-                            Card(
-                                modifier = Modifier
-                                    .size(60.dp),
-                                RoundedCornerShape(10.dp)
-                            ) {
-                                Box {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.strips),
-                                        contentDescription = "filter",
-                                        modifier = Modifier
-                                            .clickable { }
-                                            .height(30.dp)
-                                            .width(70.dp)
-                                            .clip(CircleShape),
-
+                                        androidx.compose.material.Text(
+                                            text = "Glucometer",
+                                            fontWeight = FontWeight.Bold
                                         )
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize(),
-                                        contentAlignment = Alignment.BottomEnd
-                                    ) {
-                                        Text(text = "Test Strips")
+
                                     }
 
                                 }
                             }
 
-                            Spacer(modifier = Modifier.padding(20.dp))
+                            Spacer(modifier = Modifier.width(30.dp))
 
                             Card(
                                 modifier = Modifier
-                                    .size(60.dp),
-                                RoundedCornerShape(10.dp)
+                                    .size(150.dp),
+                                RoundedCornerShape(15.dp)
+
                             ) {
                                 Box {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.syringe3),
-                                        contentDescription = "filter",
+                                    Image(
+                                        painter = painterResource(id = R.drawable.glucostixs),
+                                        contentDescription = null,
                                         modifier = Modifier
-                                            .clickable { }
-                                            .height(30.dp)
-                                            .width(70.dp)
-                                            .clip(CircleShape),
+                                            .size(300.dp)
+                                    )
 
-                                        )
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize(),
-                                        contentAlignment = Alignment.BottomEnd
+                                        contentAlignment = Alignment.TopCenter
+
                                     ) {
-                                        Text(text = "Syringes G2")
+
+                                        androidx.compose.material.Text(
+                                            text = "Glucostixs",
+                                            fontWeight = FontWeight.Bold
+                                        )
+
                                     }
 
                                 }
                             }
+
 
                         }
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
 
                         Row {
                             Card(
                                 modifier = Modifier
-                                    .size(60.dp),
-                                RoundedCornerShape(10.dp)
+                                    .size(150.dp),
+                                RoundedCornerShape(15.dp)
+
                             ) {
                                 Box {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.syringe3),
-                                        contentDescription = "filter",
+                                    Image(
+                                        painter = painterResource(id = R.drawable.salmonella),
+                                        contentDescription = null,
                                         modifier = Modifier
-                                            .clickable { }
-                                            .height(30.dp)
-                                            .width(70.dp)
-                                            .clip(CircleShape),
+                                            .size(300.dp)
+                                    )
 
-                                        )
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize(),
-                                        contentAlignment = Alignment.BottomEnd
+                                        contentAlignment = Alignment.TopCenter
+
                                     ) {
-                                        Text(text = "Syringes G1")
+
+                                        androidx.compose.material.Text(
+                                            text = "Salmonella Antigen",
+                                            fontWeight = FontWeight.Bold
+                                        )
+
                                     }
 
                                 }
                             }
 
-                            Spacer(modifier = Modifier.padding(20.dp))
+                            Spacer(modifier = Modifier.width(30.dp))
 
                             Card(
                                 modifier = Modifier
-                                    .size(60.dp),
-                                RoundedCornerShape(10.dp)
+                                    .size(150.dp),
+                                RoundedCornerShape(15.dp)
+
                             ) {
                                 Box {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.syringe3),
-                                        contentDescription = "filter",
+                                    Image(
+                                        painter = painterResource(id = R.drawable.malaria),
+                                        contentDescription = null,
                                         modifier = Modifier
-                                            .clickable { }
-                                            .height(30.dp)
-                                            .width(70.dp)
-                                            .clip(CircleShape),
+                                            .size(200.dp),
 
-                                        )
+
+                                    )
+
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize(),
-                                        contentAlignment = Alignment.BottomEnd
+                                        contentAlignment = Alignment.TopCenter
+
                                     ) {
-                                        Text(text = "Syringes G1")
-                                    }
 
-                                }
-                            }
-
-                            Spacer(modifier = Modifier.padding(20.dp))
-
-                            Card(
-                                modifier = Modifier
-                                    .size(60.dp),
-                                RoundedCornerShape(10.dp)
-                            ) {
-                                Box {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.syringe3),
-                                        contentDescription = "filter",
-                                        modifier = Modifier
-                                            .clickable { }
-                                            .height(30.dp)
-                                            .width(70.dp)
-                                            .clip(CircleShape),
-
+                                        androidx.compose.material.Text(
+                                            text = "Malaria kit",
+                                            fontWeight = FontWeight.Bold
                                         )
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize(),
-                                        contentAlignment = Alignment.BottomEnd
-                                    ) {
-                                        Text(text = "Syringes G1")
+
                                     }
+
 
                                 }
                             }
-
-                            Spacer(modifier = Modifier.padding(20.dp))
-
-                            Card(
-                                modifier = Modifier
-                                    .size(60.dp),
-                                RoundedCornerShape(10.dp)
-                            ) {
-                                Box {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.syringe3),
-                                        contentDescription = "filter",
-                                        modifier = Modifier
-                                            .clickable { }
-                                            .height(30.dp)
-                                            .width(70.dp)
-                                            .clip(CircleShape),
-
-                                        )
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize(),
-                                        contentAlignment = Alignment.BottomEnd
-                                    ) {
-                                        Text(text = "Syringes G1")
-                                    }
-
-                                }
-                            }
-
-                            Spacer(modifier = Modifier.padding(20.dp))
-
-                            Card(
-                                modifier = Modifier
-                                    .size(60.dp),
-                                RoundedCornerShape(10.dp)
-                            ) {
-                                Box {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.syringe3),
-                                        contentDescription = "filter",
-                                        modifier = Modifier
-                                            .clickable { }
-                                            .height(30.dp)
-                                            .width(70.dp)
-                                            .clip(CircleShape),
-
-                                        )
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxSize(),
-                                        contentAlignment = Alignment.BottomEnd
-                                    ) {
-                                        Text(text = "Syringes G1")
-                                    }
-
-                                }
-                            }
-                            
-                            Spacer(modifier = Modifier.padding(20.dp))
-                            
-                            Row {
-                                
-                                Text(text = "Why Us?You must Trust us",
-                                    modifier = Modifier,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 40.sp)
-                            }
-                            
-                            Spacer(modifier = Modifier.height(20.dp))
-                            
-                            Row {
-                                Card {
-                                    Row {
-                                        Image(painter = painterResource(id = R.drawable.malaria),
-                                            contentDescription = null)
-                                    }
-                                    Spacer(modifier = Modifier.height(5.dp))
-                                    Row {
-                                        Text(text = "Fast Helper")
-                                    }
-                                    Spacer(modifier = Modifier.height(5.dp))
-                                    Row {
-                                       Text(text = "we offer fast deliveries")
-                                    }
-                                    
-                                }
-                                Spacer(modifier = Modifier.width(10.dp))
-                                Card {
-                                    
-                                }
-                                Spacer(modifier = Modifier.width(10.dp))
-                                Card {
-                                    
-                                }
-                                
-                            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                         }
 
+                        Spacer(modifier = Modifier.height(15.dp))
+
+                        Row {
+                            Text(text = "Click for More",
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Red,
+                                modifier = Modifier
+                                    .clickable { navController.navigate(ROUTE_ADD_PRODUCT) }
+                            )
+                        }
+                        
+                        Spacer(modifier = Modifier.height(70.dp))
 
 
 
 
 
-                        val currentPage = remember { mutableStateOf(0) }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            val currentPage = remember { mutableStateOf(0) }
 
                        // LazyRow {
                         //    item {
@@ -776,26 +844,26 @@ fun BottomBar(navController: NavHostController) {
                 color =  Color.White) },
             selected = (selectedIndex.value == 0),
             onClick = {
-                navController.navigate(ROUTE_ADD_PRODUCT) {
+                navController.navigate(ROUTE_ADD_PRODUCTS) {
                     popUpTo(ROUTE_HOME) { inclusive = true }
                 }
             })
 
-        BottomNavigationItem(icon = {
-            Image(painter = painterResource(id = R.drawable.cart),
-                contentDescription = "null",
-                modifier = Modifier
-                    .width(30.dp)
-                    .height(30.dp))
-        },
-            label = { Text(text = "My cart",
-                color =  Color.White) },
-            selected = (selectedIndex.value == 1),
-            onClick = {
-                navController.navigate(ROUTE_SEARCH) {
-                    popUpTo(ROUTE_HOME) { inclusive = true }
-                }
-            })
+//       BottomNavigationItem(icon = {
+//            Image(painter = painterResource(id = R.drawable.cart),
+//                contentDescription = "null",
+//                modifier = Modifier
+//                    .width(30.dp)
+//                    .height(30.dp))
+//        },
+//            label = { Text(text = "Cart",
+//                color =  Color.White) },
+//            selected = (selectedIndex.value == 1),
+//            onClick = {
+//                navController.navigate(ROUTE_SEARCH) {
+//                    popUpTo(ROUTE_HOME) { inclusive = true }
+//                }
+//           })
 
         BottomNavigationItem(icon = {
             Image(painter = painterResource(id = R.drawable.profile),
@@ -810,7 +878,7 @@ fun BottomBar(navController: NavHostController) {
             selected = (selectedIndex.value == 2),
             onClick = {
 
-                navController.navigate(ROUTE_DASHBOARD) {
+                navController.navigate(ROUTE_LOGIN) {
                     popUpTo(ROUTE_HOME) { inclusive = true }
                 }
 

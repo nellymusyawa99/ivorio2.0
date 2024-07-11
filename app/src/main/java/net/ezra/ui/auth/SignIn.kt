@@ -15,10 +15,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
+import net.ezra.navigation.ROUTE_ADD_STUDENTS
 import net.ezra.navigation.ROUTE_DASHBOARD
 import net.ezra.navigation.ROUTE_HOME
 import net.ezra.navigation.ROUTE_LOGIN
 import net.ezra.navigation.ROUTE_REGISTER
+import net.ezra.navigation.ROUTE_VIEW_PROD
 
 @Composable
 fun LoginScreen(navController: NavController, onLoginSuccess: () -> Unit) {
@@ -78,7 +80,7 @@ fun LoginScreen(navController: NavController, onLoginSuccess: () -> Unit) {
                             .addOnCompleteListener { task ->
                                 isLoading = false
                                 if (task.isSuccessful) {
-                                    navController.navigate(ROUTE_HOME)
+                                    navController.navigate(ROUTE_DASHBOARD)
                                 } else {
                                     error = task.exception?.message ?: "Login failed"
                                 }

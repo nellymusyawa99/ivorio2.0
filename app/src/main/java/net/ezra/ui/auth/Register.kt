@@ -98,7 +98,13 @@ fun SignUpScreen(navController: NavController, onSignUpSuccess: () -> Unit) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Sign Up",
-                color = Color.White)
+                color = Color.White,
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(ROUTE_LOGIN){
+                                popUpTo(ROUTE_REGISTER){ inclusive = true }
+                            }
+                        })
             }
 
 
