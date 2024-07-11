@@ -125,7 +125,7 @@ fun UpdateProductScreen(navController: NavController, productId: String, product
                 id = productId,
                 name = updatedProductName,
                 description = updatedProductDescription,
-                price = updatedProductPrice.toDouble(),
+              //  price = updatedProductPrice.toDouble(),
                 imageUrl = ""
             )
 

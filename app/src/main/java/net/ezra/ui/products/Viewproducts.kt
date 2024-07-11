@@ -63,7 +63,7 @@ data class Product(
     var id: String = "",
     val name: String = "",
     val description: String ="",
-    val price: Double = 0.0,
+    val price: String ="",
     var imageUrl: String = ""
 )
 
@@ -89,7 +89,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = " View Products",fontSize = 30.sp, color = Color.White)
+                    Text(text = " Equipment",fontSize = 30.sp, color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -124,15 +124,15 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(progress = progress / 100f)
-                        Text(text = "Loading... $progress%", fontSize = 20.sp)
+                        Text(text = "Looking for equipment... ", fontSize = 20.sp)
                     }
                 } else {
                     if (productList.isEmpty()) {
                         // No products found
-                        Text(text = "No products found")
+                        Text(text = "No equipment found")
                     } else {
                         // Products list
-                        LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+                        LazyVerticalGrid(columns = GridCells.Fixed(1)) {
                             items(productList.take(displayedProductCount)) { product ->
                                 ProductListItem(product) {
                                     navController.navigate("productDetail/${product.id}")

@@ -1,6 +1,5 @@
 package net.ezra.ui.products
 
-
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.widget.Toast
@@ -63,7 +62,7 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = "Add Products", fontSize = 30.sp, color = Color.White)
+                    Text(text = "Add equipment", fontSize = 30.sp, color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -106,9 +105,7 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
                                 .height(200.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text("No Image Selected",
-                                modifier = Modifier.padding(8.dp),
-                                color = Color.White,)
+                            Text("No Image Selected", modifier = Modifier.padding(8.dp))
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
@@ -122,24 +119,24 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
                     TextField(
                         value = productName,
                         onValueChange = { productName = it },
-                        label = { Text("Product Name") },
-
+                        label = { Text("Equipment") },
+                        modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     TextField(
                         value = productDescription,
                         onValueChange = { productDescription = it },
-                        label = { Text("Product Type") },
-
+                        label = { Text("About Equipment") },
+                        modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     TextField(
                         value = productPrice,
                         onValueChange = { productPrice = it },
-                        label = { Text("Product Price") },
+                        label = { Text("Equipment cost") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         keyboardActions = KeyboardActions(onDone = { /* Handle Done action */ }),
-
+                        modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -173,7 +170,7 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
                                     onProductAdded,
                                     productName,
                                     productDescription,
-                                    productPrice.toDouble(),
+                                    productPrice,
                                     productImageUri
                                 )
                             }
@@ -189,8 +186,8 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
     )
 }
 
-private fun addProductToFirestore(navController: NavController, onProductAdded: () -> Unit, productName: String, productDescription: String, productPrice: Double, productImageUri: Uri?) {
-    if (productName.isEmpty() || productDescription.isEmpty() || productPrice.isNaN() || productImageUri == null) {
+private fun addProductToFirestore(navController: NavController, onProductAdded: () -> Unit, productName: String, productDescription: String, productPrice: String, productImageUri: Uri?) {
+    if (productName.isEmpty() || productDescription.isEmpty() || productPrice.isEmpty() || productImageUri == null) {
         // Validate input fields
         return
     }
@@ -220,7 +217,7 @@ private fun addProductToFirestore(navController: NavController, onProductAdded: 
                         ).show()
 
                         // Navigate to another screen
-                        navController.navigate(ROUTE_VIEW_PROD)
+                        navController.navigate(ROUTE_HOME)
 
                         // Invoke the onProductAdded callback
                         onProductAdded()

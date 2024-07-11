@@ -159,7 +159,7 @@ fun HomeScreen(navController: NavHostController) {
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 15.sp,
                                         modifier = Modifier.clickable {
-                                            navController.navigate(ROUTE_ADD_PRODUCT)
+                                            navController.navigate(ROUTE_VIEW_PROD)
                                         }
                                     )
 
@@ -170,7 +170,7 @@ fun HomeScreen(navController: NavHostController) {
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 15.sp,
                                         modifier = Modifier.clickable {
-                                            navController.navigate(ROUTE_ADD_PRODUCT)
+                                            navController.navigate(ROUTE_VIEW_PROD)
                                         }
                                     )
 
@@ -180,7 +180,7 @@ fun HomeScreen(navController: NavHostController) {
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 15.sp,
                                         modifier = Modifier.clickable {
-                                            navController.navigate(ROUTE_ADD_PRODUCT)
+                                            navController.navigate(ROUTE_VIEW_PROD)
                                         }
                                     )
 
@@ -190,7 +190,7 @@ fun HomeScreen(navController: NavHostController) {
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 15.sp,
                                         modifier = Modifier.clickable {
-                                            navController.navigate(ROUTE_ADD_PRODUCT)
+                                            navController.navigate(ROUTE_VIEW_PROD)
                                         }
                                     )
 
@@ -200,7 +200,7 @@ fun HomeScreen(navController: NavHostController) {
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 15.sp,
                                         modifier = Modifier.clickable {
-                                            navController.navigate(ROUTE_ADD_PRODUCT)
+                                            navController.navigate(ROUTE_VIEW_PROD)
                                         }
                                     )
                                 }
@@ -834,13 +834,13 @@ fun BottomBar(navController: NavHostController) {
             })
 
         BottomNavigationItem(icon = {
-            Image(painter = painterResource(id = R.drawable.search1),
+            Image(painter = painterResource(id = R.drawable.plus),
                 contentDescription = "null",
                 modifier = Modifier
                     .width(30.dp)
                     .height(30.dp))
         },
-            label = { Text(text = "Search",
+            label = { Text(text = "Add",
                 color =  Color.White) },
             selected = (selectedIndex.value == 0),
             onClick = {
